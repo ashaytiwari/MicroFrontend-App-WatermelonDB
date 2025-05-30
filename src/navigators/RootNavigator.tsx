@@ -1,30 +1,30 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react';
 import Home from '../screens/Home';
 import Products from '../screens/Products';
 import { colors } from '../styles/colors';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 function RootNavigator(){
 
-  const drawerNavigatorAttributes = {
+  const stackNavigatorAttributes = {
     initialRouteName: 'Home',
     screenOptions: {
       headerStyle: { backgroundColor: colors.primary },
       headerTintColor: colors.white,
       // sceneContainerStyle: { backgroundColor: colors.tertiary },
-      drawerContentStyle: {backgroundColor: colors.white},
-      drawerInactiveTintColor: colors.tertiary,
-      drawerActiveTintColor: colors.primary,
+      // drawerContentStyle: {backgroundColor: colors.white},
+      // drawerInactiveTintColor: colors.tertiary,
+      // drawerActiveTintColor: colors.primary,
     }
   };
 
   return (
-    <Drawer.Navigator {...drawerNavigatorAttributes}>
-      <Drawer.Screen name='Home' component={Home} />
-      <Drawer.Screen name='Products' component={Products} />
-    </Drawer.Navigator>
+    <Stack.Navigator {...stackNavigatorAttributes}>
+      <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='Products' component={Products} />
+    </Stack.Navigator>
   );
 
 }
