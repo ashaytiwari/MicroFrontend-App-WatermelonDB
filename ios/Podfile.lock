@@ -1828,7 +1828,11 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - simdjson (3.9.4)
   - SocketRocket (0.7.1)
+  - WatermelonDB (0.28.0):
+    - React
+    - simdjson
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1907,6 +1911,8 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "simdjson (from `../node_modules/@nozbe/simdjson`)"
+  - "WatermelonDB (from `../node_modules/@nozbe/watermelondb`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -2061,6 +2067,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  simdjson:
+    :path: "../node_modules/@nozbe/simdjson"
+  WatermelonDB:
+    :path: "../node_modules/@nozbe/watermelondb"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2138,9 +2148,11 @@ SPEC CHECKSUMS:
   RNCMaskedView: ae521efb1c6c2b183ae0f8479487db03c826184c
   RNGestureHandler: ebef699ea17e7c0006c1074e1e423ead60ce0121
   RNScreens: 482e9707f9826230810c92e765751af53826d509
+  simdjson: 7bb9e33d87737cec966e7b427773c67baa4458fe
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
+  WatermelonDB: 75e467adbaf2cb2809780fb3eda7ce4964e11778
   Yoga: c758bfb934100bb4bf9cbaccb52557cee35e8bdf
 
-PODFILE CHECKSUM: a9d7d03710fff4599cfc9b018b2a9604fe26a2ba
+PODFILE CHECKSUM: 4576fd316e40fda5d7d45949f4e2b91ba9e7a7bb
 
 COCOAPODS: 1.16.2
