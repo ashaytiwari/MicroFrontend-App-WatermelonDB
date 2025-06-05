@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Button, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
+import { syncData } from '../services/syncData';
 
 const Home = () => {
 
@@ -18,6 +19,8 @@ const Home = () => {
     ])
   }
 
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>🏠 Welcome to the Home Screen</Text>
@@ -28,6 +31,10 @@ const Home = () => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={launchAlert}>
         <Text style={styles.buttonText}>Launch Alert</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={syncData}>
+        <Text style={styles.buttonText}>Start Sync</Text>
       </TouchableOpacity>
     </View>
   );
