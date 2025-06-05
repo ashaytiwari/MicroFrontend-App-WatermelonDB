@@ -26,15 +26,20 @@ const Home = () => {
       <Text style={styles.title}>🏠 Welcome to the Home Screen</Text>
       <Text style={styles.subtitle}>This is a dummy screen for testing UI and navigation.</Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation?.navigate('Products')}>
-        <Text style={styles.buttonText}>Go to Products</Text>
-      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={launchAlert}>
         <Text style={styles.buttonText}>Launch Alert</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={syncData}>
         <Text style={styles.buttonText}>Start Sync</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation?.navigate('Products')}>
+        <Text style={styles.buttonText}>Go to Test Product</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation?.navigate('Category')}>
+        <Text style={styles.buttonText}>Go to Category</Text>
       </TouchableOpacity>
     </View>
   );

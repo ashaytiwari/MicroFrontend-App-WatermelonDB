@@ -3,6 +3,7 @@ import Home from '../screens/Home';
 import Products from '../screens/Products';
 import { colors } from '../styles/colors';
 import { createStackNavigator } from '@react-navigation/stack';
+import Category from '../screens/Category';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ function RootNavigator(){
     <Stack.Navigator {...stackNavigatorAttributes}>
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='Products' component={Products} />
+      <Stack.Screen name='Category' component={Category} />
     </Stack.Navigator>
   );
 
