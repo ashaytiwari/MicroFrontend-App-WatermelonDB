@@ -3,18 +3,47 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { database } from '../db';
 import { colors } from '../styles/colors';
 
+import { Q } from '@nozbe/watermelondb';
+
+interface IPaginationStateModel {
+  page: number,
+  lastFetchedId: null | string
+}
+
 const Category = () => {
 
   const [categories, setCategories] = useState<Array<any>>([]);
+  const [paginationState, setPaginationState] = useState<IPaginationStateModel>({
+    page: 1,
+    lastFetchedId: null
+  });
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  async function fetchCategories() {
+  async function fetchAllCategories() {
     const _categories = await database.get('category').query().fetch();
     setCategories(_categories);
   }
+
+  async function fetchPaginatedData() {
+
+    const lastFetchedQueryClause = paginationState.lastFetchedId ? Q.where('id', Q.gt(paginationState.lastFetchedId)) : Q.where('id', Q.notEq(''));
+
+    let query = database.get('category').query(
+      lastFetchedQueryClause,
+      Q.sortBy('id', 'asc'),
+      Q.take(20)
+    );
+
+    const results = await query.fetch();
+    setCategories(results);
+    setPaginationState((_paginationState) => {
+      return {
+        page: _paginationState.page + 1,
+        lastFetchedId: results[results.length - 1].id
+      };
+    });
+  }
+
+  console.log(paginationState, categories.length);
 
   function renderCategoryItem(category: any) {
     const _category = category.item;
@@ -46,17 +75,16 @@ const Category = () => {
     return <FlatList {...flatListAttributes} />
   }
 
-  console.log(categories.length);
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Category Screen</Text>
-      {/* <TouchableOpacity style={styles.button} onPress={fetchCategories}>
+      <TouchableOpacity style={styles.button} onPress={fetchAllCategories}>
         <Text style={styles.buttonText}>Fetch all categories</Text>
-      </TouchableOpacity> */}
-      {/* <TouchableOpacity style={styles.button} onPress={fetchCategories}>
-        <Text style={styles.buttonText}>Fetch all categories</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={fetchPaginatedData}>
+        <Text style={styles.buttonText}>Fetch Page {paginationState.page} records only</Text>
+      </TouchableOpacity>
+      <Text>Total Items shown: {categories.length}</Text>
       {renderCategories()}
     </View>
   );

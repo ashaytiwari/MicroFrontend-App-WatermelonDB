@@ -19,22 +19,22 @@ export async function syncData() {
       schema: 'product',
       endpoint: 'getNewProducts'
     },
-    // {
-    //   schema: 'Product2',
-    //   endpoint: 'getNewProducts'
-    // },
-    // {
-    //   schema: 'Product3',
-    //   endpoint: 'getNewProducts'
-    // },
-    // {
-    //   schema: 'Product4',
-    //   endpoint: 'getNewProducts'
-    // },
-    // {
-    //   schema: 'Images',
-    //   endpoint: 'getImages'
-    // },
+    {
+      schema: 'product2',
+      endpoint: 'getNewProducts'
+    },
+    {
+      schema: 'product3',
+      endpoint: 'getNewProducts'
+    },
+    {
+      schema: 'product4',
+      endpoint: 'getNewProducts'
+    },
+    {
+      schema: 'product5',
+      endpoint: 'getNewProducts'
+    },
   ];
 
   const promiseCollection: any = [];
@@ -104,7 +104,7 @@ async function addDataToDB(apiResponse: Array<any>, element: ISchemaElement, ski
 
     console.time(localTimerOneBatchOperation);
 
-    const productCollection = database.get('product');
+    const productCollection = database.get(element.schema);
     const cmsCollection = database.get('cmsDocuments');
     const categoryCollection = database.get('category');
 
