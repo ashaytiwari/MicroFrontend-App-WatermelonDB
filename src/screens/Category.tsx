@@ -4,6 +4,9 @@ import { database } from '../db';
 import { colors } from '../styles/colors';
 
 import { Q } from '@nozbe/watermelondb';
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
+import { NativeModules } from 'react-native';
+import { sanitizedRaw } from '@nozbe/watermelondb/RawRecord';;
 
 interface IPaginationStateModel {
   page: number,
@@ -17,6 +20,7 @@ const Category = () => {
     page: 1,
     lastFetchedId: null
   });
+  const wildcardPattern = 'R_30__VJU_';
 
   async function fetchAllCategories() {
     const _categories = await database.get('category').query().fetch();
@@ -41,6 +45,64 @@ const Category = () => {
         lastFetchedId: results[results.length - 1].id
       };
     });
+  }
+
+
+  // const tag = database.adapter._tag
+  // const bridge = NativeModules.DatabaseBridge
+
+  // const dirtyRecords = await bridge.query(tag, 'select from ...')
+  // const rawRecords = sanitizeQueryResult(dirtyRecords, appSchema.tables['name_of_table'])
+
+  async function fetchWildCardModels() {
+    try {
+
+      // const result = await (database.adapter as any).unsafeExecute({
+      //   sqls: [
+      //     // ['SELECT * FROM product WHERE Title LIKE ? COLLATE NOCASE', [wildcardPattern]],
+      //     ['SELECT * FROM product']
+      //   ]
+      // });
+
+      // const result = await database.adapter.unsafeExecute({
+      //   sqlString: 'SELECT * FROM cmsDocuments'
+      // });
+      // console.log(result, 'fetchWildCardModels result');
+
+      const unsafeQueryRaw: any = {
+        table: 'product',
+        description: {
+          where: [], // Wildcard pattern using SQLite's `_` and `%`
+          joinTables: [],
+          nestedJoinTables: [],
+          sortBy: [],
+          sql: {
+            sql: 'SELECT * FROM product WHERE Title LIKE ? COLLATE NOCASE',
+            values: ['R_30__VJU_'],
+          }
+        },
+        associations: [],
+      }
+
+      const result = await database.adapter.unsafeQueryRaw(unsafeQueryRaw);
+      console.log(result, 'fetchWildCardModels result');
+
+
+      // const sqliteAdapter = database.adapter as any;
+
+      // const results = await sqliteAdapter.unsafeSqlQuery(
+      //   `SELECT * FROM product WHERE Title LIKE ? COLLATE NOCASE`,
+      //   [wildcardPattern]
+      // );
+
+      // const results = await database.adapter.query('SELECT * FROM cmsDocuments' as any);
+      // const results = await database.ad
+
+      // console.log(results, 'Wildcard results');
+    } catch (error) {
+      console.log(error, 'fetchWildCardModels error');
+    }
+
   }
 
   console.log(paginationState, categories.length);
@@ -83,6 +145,9 @@ const Category = () => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={fetchPaginatedData}>
         <Text style={styles.buttonText}>Fetch Page {paginationState.page} records only</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={fetchWildCardModels}>
+        <Text style={styles.buttonText}>Fetch Wildcard Models for - {wildcardPattern}</Text>
       </TouchableOpacity>
       <Text>Total Items shown: {categories.length}</Text>
       {renderCategories()}
